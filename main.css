@@ -1,0 +1,84 @@
+html {
+    background-color: #F4F4F4;
+}
+
+.container-width {
+    max-width: 800px;
+    margin-top: 30px;
+}
+
+.todo-card {
+    display: flex;
+    justify-content: space-between;
+margin-top: 2px;
+padding: 16px;    
+background: #FFFFFF;
+box-shadow: 6px 6px 11px 0 rgba(0,0,0,0.04);
+border-radius: 2px;
+}
+
+
+.todo-card > p {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.todo-card > div {
+    display: flex;
+}
+
+.todo-card > div > p {
+    margin-left: 30px;
+}
+
+/* checbox styles */
+.checkbox-container {
+    display: block;
+    position: relative;
+}
+.checker {
+    opacity: 0;
+  }
+
+  .checkbox-label {
+    cursor: pointer;
+  }
+
+  .checker + .checkbox-label:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+      background: url(assets/unchecked.svg) no-repeat center;
+  }
+
+  .checker:checked + .checkbox-label:before {
+    background: url(assets/checked.svg) no-repeat center;
+  }
+
+  .remove {
+      display: block;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      background-image: url(assets/delete.svg)
+  }
+
+  .remove:hover {
+    display: block;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    background-image: url(assets/delete_hover.svg)
+}
+
+.content-left {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+ 
