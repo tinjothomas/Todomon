@@ -94,7 +94,6 @@ function updateDoc(id, boolean) {
 function percentage(day) {
   db.count({ date: day, completed: true }, function (err, completed) {
     var completed = completed;
-    console.log(completed);
     db.count({ date: day }, function (err, total) {
       var total = total;
       $("#progress-bar").val((completed * 100) / total);

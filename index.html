@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TodoMon</title>
+    <title>TodoMon | Simple todo in browser</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="dependencies/jquery3.3.1.js"></script>
     <script src="dependencies/nedb.min.js"></script>
@@ -19,7 +19,8 @@
     <div class="container container-width">
         <div class="field has-addons">
             <div class="control">
-                <input class="input" id="todo-input" type="text" placeholder="What do you like to do today">
+                <input class="input input-custom" id="todo-input" type="text"
+                    placeholder="What do you like to do today">
             </div>
             <div class="control">
                 <a id="add-button" class="button is-info">
@@ -40,8 +41,10 @@
                 </div>
             </div>
         </div>
+        <h1 class="heading title">Today</h1>
         <div id="list-items">
         </div>
+        <h1 class="heading title">Yesterday</h1>
         <div id="pending-items">
         </div>
 
