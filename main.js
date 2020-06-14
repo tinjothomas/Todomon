@@ -2,6 +2,8 @@ var today = moment().format("MMM Do YY");
 var yesterday = moment().subtract(1, "days").format("MMM Do YY");
 var selectItems = document.getElementById("list-items");
 var pendingItems = document.getElementById("pending-items");
+var progressContainer = document.querySelector("#progress-container");
+var progressBar = document.querySelector("#progress-bar");
 
 //nedb Confi
 var db = new Nedb({
@@ -13,7 +15,6 @@ var db = new Nedb({
 getTodo(today);
 getPendingTodo(yesterday);
 percentage(today);
-console.log(today);
 
 //Add button for todo list items
 var addButton = document.getElementById("add-button");
@@ -34,9 +35,7 @@ function setTodo() {
   };
 
   db.insert(data, function (err, newDoc) {
-    var newCard = todoCardWithNone(newDoc);
-    $("#list-items").prepend(newCard);
-    $(".todo-card").slideDown(150);
+    getTodo(today);
   });
 }
 
@@ -54,7 +53,19 @@ function getTodo(day) {
       docs.forEach(function (element) {
         selectItems.innerHTML += todoMarkup(element);
       });
+      setEventListender();
     });
+}
+
+function setEventListender() {
+  var cards = document.querySelectorAll(".remove");
+  cards.forEach((card) =>
+    card.addEventListener("click", function () {
+      var doc = card.getAttribute("data-id");
+      removeDoc(doc);
+      getTodo(today);
+    })
+  );
 }
 
 function getPendingTodo(day) {
@@ -96,7 +107,8 @@ function percentage(day) {
     var completed = completed;
     db.count({ date: day }, function (err, total) {
       var total = total;
-      $("#progress-bar").val((completed * 100) / total);
+      var barWidth = progressContainer.offsetWidth;
+      progressBar.style.width = `${(completed * 100) / total}px`;
     });
   });
 }
@@ -104,59 +116,22 @@ function percentage(day) {
 //creating todo items dynamically
 function todoMarkup(element) {
   var checked = element.completed ? "checked" : "";
-  return `<div class="todo-card">
-     <p>${element.toDo}</p>
-     <div class="content-left">
-     <p>${moment(element.time).fromNow()} </p>
-     <div class="checkbox-container">
-     <input class="checker" id="${element._id}" data-id="${
+  return `
+  <div class="todo-card">
+<p>${element.toDo}</p>
+<div class="content-left">
+    <p>${moment(element.time).fromNow()}</p>
+    <div class="actions">
+        <div class="checkbox-container">
+            <input class="checker" id="${element._id}" data-id="${
     element._id
   }" data-value="${element.status}" type="checkbox" ${checked}>
-    <label for="${element._id}" class="checkbox-label"></label>
-     </div>
-     <div class="remove"" data-id="${element._id}">
-     </div>
-     </div>
-    </div>`;
+            <label for="${element._id}" class="checkbox-label"></label>
+        </div>
+        <div class="remove"" data-id="${element._id}">
+        </div>
+    </div>
+</div>
+</div>
+  `;
 }
-
-//creating todo items dynamically
-function todoCardWithNone(element) {
-  var checked = element.completed ? "checked" : "";
-  return `<div class="todo-card" style="display: none">
-     <p>${element.toDo}</p>
-     <div class="content-left">
-     <p>${moment(element.time).fromNow()} </p>
-     <div class="checkbox-container">
-     <input class="checker" id="${element._id}" data-id="${
-    element._id
-  }" data-value="${element.status}" type="checkbox" ${checked}>
-    <label for="${element._id}" class="checkbox-label"></label>
-     </div>
-     <div class="remove"" data-id="${element._id}">
-     </div>
-     </div>
-    </div>`;
-}
-
-$(document).ready(function () {
-  //remove button
-  $(document).on("click", ".remove", function () {
-    var docID = $(this).attr("data-id");
-    removeDoc(docID);
-    $(this)
-      .closest(".todo-card")
-      .slideUp(150)
-      .promise()
-      .done(function () {
-        $(this).closest(".todo-card").remove();
-      });
-  });
-  //set checkbox value based on databse
-  $(document).on("change", ".checker", function () {
-    var docID = $(this).attr("data-id");
-    var completed = $(this).prop("checked");
-    updateDoc(docID, completed);
-    percentage(today);
-  });
-});

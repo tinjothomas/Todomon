@@ -6,10 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>TodoMon | Simple todo in browser</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="dependencies/jquery3.3.1.js"></script>
     <script src="dependencies/nedb.min.js"></script>
     <script src="dependencies/moment.min.js"></script>
-    <link rel="stylesheet" href="dependencies/bulma.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 
 </head>
@@ -17,36 +15,25 @@
 
 <body>
     <div class="container container-width">
-        <div class="field has-addons">
-            <div class="control">
-                <input class="input input-custom" id="todo-input" type="text"
-                    placeholder="What do you like to do today">
-            </div>
-            <div class="control">
-                <a id="add-button" class="button is-info">
-                    Add
-                </a>
-            </div>
+        <div class="add-input">
+            <input class="text-field" id="todo-input" type="text" placeholder="What do you like to do today">
+            <input id="add-button" type="button" value="Add">
         </div>
-        <progress id="progress-bar" class="progress is-success" value="0" max="100">75%</progress>
-        <div class="level">
-            <div class="level-left">
-                <div class="level-item">
-                    <h3 class="title is-3">Things to do</h3>
+        <div class="progress" id="progress-container">
+            <div class="bar" id="progress-bar"></div>
+        </div>
+        <h2>Today</h1>
+            <div id="list-items">
+                <!-- dynamic cards come here -->
+
+                <!-- dynamic -->
+            </div>
+            <h2>Yesterday</h1>
+                <div id="pending-items">
+                    <!-- dynamic cards come here -->
+
+                    <!-- dynamic -->
                 </div>
-            </div>
-            <div class="level-right">
-                <div class="level-item">
-                    <h3 id="last-updated" class="title is-4">Your Items</h3>
-                </div>
-            </div>
-        </div>
-        <h1 class="heading title">Today</h1>
-        <div id="list-items">
-        </div>
-        <h1 class="heading title">Yesterday</h1>
-        <div id="pending-items">
-        </div>
 
     </div>
 
